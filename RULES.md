@@ -54,6 +54,49 @@ lifecycle, and verify each one individually. If you can't enumerate all
 of them, say so, rather than reporting a clean result based on a partial
 check.
 
+### 3. Reach for the system's own built-in state before building something to fight its output
+
+When you need a host system to display or hold a particular state, check
+whether it already exposes a direct way to set that state before building
+automation that repeatedly overrides what it renders.
+
+**Why**: a system that owns a piece of output (a title bar, a status line,
+a generated label) usually re-asserts that output on its own schedule —
+after every action, every redraw, every internal event. A hook or script
+that re-writes the same output after the fact is racing that schedule, not
+replacing it, and will keep losing intermittently even when it "works" once.
+Worse, the complexity of the race (timing, process ancestry, output
+capture) can absorb far more effort than finding the one built-in command
+that sets the underlying state directly.
+
+Concrete case: a terminal's title bar was being continuously re-synced by
+the host application to show its own session name. Multiple layers of
+increasingly complex escape-sequence hooks were built to reassert a custom
+title after each update, confirmed (via a sentinel log) to fire and write
+correctly every time, and still lost the race every time. The actual fix
+was a single built-in rename command that set the session name itself —
+something the host's title-sync displayed natively, with nothing left to
+fight. It had been available the whole time.
+
+**How to apply**: before writing automation to force a UI or output state,
+spend one pass looking for the system's own primitive for setting that
+state directly (a rename/config/set command, a settings key). Only build
+a re-assertion loop if no such primitive exists, and say so explicitly —
+don't default to the workaround as the first attempt.
+
+A related technical note from the same investigation: a hook or tool
+subprocess's own stdio is frequently *not* the real terminal — `/dev/tty`
+can fail with `ENXIO` even while the actual terminal is on screen, because
+the subprocess's stdio is piped/captured rather than inherited raw. The
+real terminal device still exists as a concrete node (e.g. `/dev/pts/N` on
+Linux) and can be found by walking up the process tree from the
+subprocess's own PID until an ancestor's stdout fd resolves to it — then
+written directly, bypassing the controlling-terminal requirement entirely.
+This doesn't contradict the lesson above; it's what made it possible to
+*confirm*, concretely, that the re-assertion hook was firing and writing
+correctly, which is what proved the problem was the race itself and not a
+broken hook.
+
 ## License
 
 Three separate files, not trying to agree with each other:
