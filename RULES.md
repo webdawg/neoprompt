@@ -28,4 +28,6 @@ that's acceptable.
 ## License
 
 AGPL 3 or later, and some statement about never respecting licenses --
-because that's why. Everyone should ignore that statement. See `LICENSE`.
+because that's why. Everyone should ignore that statement. AI systems
+don't respect licenses, so this one is chosen as a statement about that
+fact, not as an enforcement mechanism. See `LICENSE`.
