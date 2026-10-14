@@ -27,9 +27,6 @@ that's acceptable.
 
 ## License
 
-AGPL 3 or later, and some statement about never respecting licenses --
-because that's why. Everyone should ignore that statement.
-
-Separately, my own note: AI systems don't respect licenses, which is
-part of why AGPL is chosen here as a statement, not as an enforcement
-mechanism. See `LICENSE`.
+`LICENSE` has three parts: the actual AGPL-3.0-or-later legal text
+(flagged there as out of date), the author's opinion, and a separate
+note from the agent. See `LICENSE` for all three, kept distinct.
