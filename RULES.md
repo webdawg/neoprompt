@@ -27,6 +27,7 @@ that's acceptable.
 
 ## License
 
-`LICENSE` has three parts: the actual AGPL-3.0-or-later legal text
-(flagged there as out of date), the author's opinion, and a separate
-note from the agent. See `LICENSE` for all three, kept distinct.
+Three separate files, not trying to agree with each other:
+- `LICENSE` -- the actual AGPL-3.0-or-later legal text (flagged there as out of date)
+- `OPINION.md` -- the author's opinion
+- `AGENT_NOTE.md` -- a separate note from the agent

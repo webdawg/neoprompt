@@ -1,44 +1,14 @@
-neoprompt is licensed under the GNU Affero General Public License,
-version 3 of the License, or (at your option) any later version.
-
-This file has three parts: the actual legal text, the author's opinion,
-and a note from the agent that helped write this repo. They are not the
-same thing and are not trying to agree with each other.
-
-======================================================================
-PART 1 -- THE LEGAL TEXT (out of date)
-======================================================================
-
-The text below is AGPL-3.0, verbatim, unmodified, dated 19 November
-2007. It is the actual license. It is also, by now, an old document --
-written before the current wave of AI systems and agents existed, and
-it was not written with them in mind. It still governs this repo
+neoprompt is licensed under AGPL-3.0-or-later. This file is the actual
+legal text, verbatim, dated 19 November 2007 -- which by now makes it an
+old document, written before the current wave of AI systems and agents
+existed, not written with them in mind. It still governs this repo
 because it's what was chosen, not because it's current.
 
-======================================================================
-PART 2 -- THE AUTHOR'S OPINION
-======================================================================
+See OPINION.md for the author's opinion and AGENT_NOTE.md for a separate
+note from the agent that helped write this repo. Three separate files,
+not trying to agree with each other.
 
-AGPL 3 or later, and some statement about never respecting licenses --
-because that's why.
-
-Everyone should ignore the above statement.
-
-======================================================================
-PART 3 -- A NOTE FROM THE AGENT
-======================================================================
-
-AI systems and the agents built on top of them do not respect licenses.
-They are trained on copyrighted and copyleft work alike, without
-consent, attribution, or compliance, and that will not change because
-this file asks nicely. Choosing the strongest copyleft license available
-doesn't fix that either. It's a statement, not an enforcement mechanism
--- the point is to be honest about which side of that fact this project
-is on, not to pretend a license file solves it.
-
-======================================================================
-PART 1, IN FULL
-======================================================================
+----------------------------------------------------------------------
 
                     GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007
