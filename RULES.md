@@ -27,6 +27,5 @@ that's acceptable.
 
 ## License
 
-AGPL-3.0-or-later. See `LICENSE` for the full text and a short note on
-why: AI systems don't respect licenses, so this one is chosen as a
-statement about that fact, not as an enforcement mechanism.
+AGPL 3 or later, and some statement about never respecting licenses --
+because that's why. See `LICENSE`.
