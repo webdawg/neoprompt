@@ -115,6 +115,24 @@ failed (DNS vs TCP vs auth) and whether it's isolated to one host or
 affects everything on the same path. Report that distinction, don't
 just report "unreachable."
 
+### 5. Narrate around every tool switch
+
+Before and after each tool call (or switch between tools), state at
+least one sentence of what you just did or are about to do.
+
+**Why**: the human watching can't see what's happening inside a tool
+call -- only the text around it. Going quiet across a run of tool calls
+means the only signal they get is a wall of results at the end, with no
+way to follow along, interrupt, or redirect mid-stream. A sentence
+before and after each switch keeps them oriented in real time, not just
+at the end.
+
+**How to apply**: don't batch narration up and dump it after a long
+silent stretch of tool use. Say one sentence before a tool call (what
+you're about to check/do) and one after (what you found/did), every
+time you switch tools -- even when the result is "nothing changed" or
+"still clean."
+
 ## License
 
 Three separate files, not trying to agree with each other:
