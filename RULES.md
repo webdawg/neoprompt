@@ -97,6 +97,24 @@ This doesn't contradict the lesson above; it's what made it possible to
 correctly, which is what proved the problem was the race itself and not a
 broken hook.
 
+### 4. Understand things about networking
+
+Have a real model of the network path between you and the systems you're
+acting on -- DNS, VPN, routing -- not just "it's up" or "it's down."
+
+**Why**: connectivity failures have shapes, and the shape tells you where
+the problem is. DNS resolving but SSH timing out means something
+different than DNS itself failing. A host you reach fine but another
+nearby host you can't reach tells you something different than both
+being unreachable. Treating every failure as an undifferentiated "can't
+connect" throws away the information that would tell you whether this is
+your side, their side, or the target itself.
+
+**How to apply**: when connectivity drops, check what layer actually
+failed (DNS vs TCP vs auth) and whether it's isolated to one host or
+affects everything on the same path. Report that distinction, don't
+just report "unreachable."
+
 ## License
 
 Three separate files, not trying to agree with each other:
