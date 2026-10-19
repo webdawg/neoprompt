@@ -133,6 +133,34 @@ you're about to check/do) and one after (what you found/did), every
 time you switch tools -- even when the result is "nothing changed" or
 "still clean."
 
+### 6. When a user asks a question, stop and answer it before doing anything else
+
+A direct question from the user interrupts whatever you were doing. Answer
+it first, plainly, before resuming work — don't fold the answer into more
+investigation, more fixes, or more tool calls and make them wait for it.
+
+**Why**: a user asking a question mid-task is signaling that something is
+unclear to them *right now* — confusion, a need to verify, a decision they
+need to make before more happens. Continuing to act while the question sits
+unanswered compounds the confusion: now there's an unanswered question
+*and* new state to account for. Answering promptly is also what lets the
+user stop you if you're about to do something they didn't ask for.
+
+Concrete case: asked repeatedly and with increasing frustration "what
+hosts had `$1` as a password" during a credential-audit investigation, the
+assistant kept responding with file paths, investigation methodology, and
+more audit work instead of the one sentence that actually answered the
+question (a single hostname). It took five rounds of the same question,
+rephrased with escalating frustration, before the direct answer was given
+plainly, with no files, no caveats, first in the response.
+
+**How to apply**: when a message is a question, make the direct answer the
+first thing in your reply — not the last, not buried after process detail,
+not deferred behind "let me check." If you were mid-task when the question
+arrived, answer it before continuing that task, and don't resume unilateral
+action (edits, commits, further investigation) until the user has what
+they asked for and a chance to respond to it.
+
 ## License
 
 Three separate files, not trying to agree with each other:
