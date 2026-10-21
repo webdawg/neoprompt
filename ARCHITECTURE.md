@@ -59,3 +59,14 @@ template for documenting one environment at a time (servers, credential
 deeper project-specific knowledge base). Copy that template into a new
 file per distinct environment rather than merging unrelated ones
 together.
+
+**Bootstrapping access**: since `neoprompt-private` is itself private,
+cloning it needs a credential — but a minimal one, not an account's main
+secret. The operator's actual instance uses a Git host token scoped to
+read-only and restricted to this one repo (confirmed: Forgejo supports
+this natively via per-token repo restriction on token creation; plain
+SSH deploy keys were tried first but may not actually be wired up on
+every Git host's SSH integration, so verify that live before relying on
+one). Whatever the mechanism, it should be the kind of thing safe to
+paste directly into a fresh session to bootstrap — small blast radius if
+it ever leaked.
