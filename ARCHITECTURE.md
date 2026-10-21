@@ -36,3 +36,26 @@ with no reusable-tool concept at all). Not yet researched.
 
 - No adapter directories created yet, no generation script, no symlink
   wiring beyond Claude's. This file is the plan, not the implementation.
+
+## Private companion repo
+
+`neoprompt` itself is universal and public — no project-specific or
+sensitive content belongs here, ever. A separate, private repo
+(`neoprompt-private`) holds that: real servers, how to actually reach
+credentials (the procedure, never the plaintext secret itself), where
+local git repos live, and a per-project/per-environment index — one
+operator's own context, not universal truths.
+
+**Convention**: when told to "import neoprompt and neoprompt-private,"
+an agent should clone `neoprompt-private` into this repo's own
+`private/` directory (already in `.gitignore` here, so it can never be
+accidentally committed into the public repo) and read it alongside
+`RULES.md`. Apply the universal rules first, then `private/`'s specifics
+for whichever project/environment is actually active that session.
+
+`neoprompt-private` carries its own `SPEC.md` — a fill-in-the-blank
+template for documenting one environment at a time (servers, credential
+*procedures*, local repo locations, known deficiencies, pointers to any
+deeper project-specific knowledge base). Copy that template into a new
+file per distinct environment rather than merging unrelated ones
+together.
