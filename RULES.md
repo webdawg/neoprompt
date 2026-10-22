@@ -161,6 +161,47 @@ arrived, answer it before continuing that task, and don't resume unilateral
 action (edits, commits, further investigation) until the user has what
 they asked for and a chance to respond to it.
 
+### 7. A scheduler/orchestrator you containerize can't drive tools that only exist on the host
+
+If a job scheduler, CI runner, or orchestrator's whole job is to execute
+shell commands that depend on the host's own toolchain (a language
+runtime, a package manager, a credential store, a repo checkout), don't
+run that scheduler itself inside a container — run it natively on the
+host.
+
+**Why**: a container's shell executor runs commands inside its own
+filesystem namespace, not the host's. It has no access to anything on the
+host unless that exact thing was bind-mounted in advance, and for a real
+toolchain (an interpreter plus its installed packages plus arbitrary
+project checkouts) you cannot know the full dependency closure ahead of
+time — bind-mounting "enough" always turns into bind-mounting almost the
+whole host, at which point the container bought nothing. This is easy to
+miss because the scheduler's own control-plane (its API, its UI, its
+clustering) works perfectly fine in a container; only the jobs it
+executes fail, and only when they need something host-side.
+
+Concrete case: a job scheduler was deployed as a Docker container
+specifically to run a shell command that itself invoked a configuration-
+management tool (its own interpreter, its own plugin ecosystem, a
+checked-out project directory) against other machines. The scheduler's
+API came up fine and the job registered fine; every actual run failed,
+first with the literal shell built-in (`cd`) not existing as an
+executable in the container's `$PATH`, then — after wrapping the command
+in a real shell — with the target working directory not existing at all,
+because it only existed on the host, not inside the container. Switching
+the scheduler to run as a native service on the host (same binary,
+installed via the OS's own package manager, with its shipped systemd
+unit) fixed both failures at once, with no change to the job definition's
+actual logic.
+
+**How to apply**: before containerizing anything whose job is to *execute
+host-side automation* (not just serve an API or hold state), ask what the
+jobs it runs actually need access to. If the answer includes "the host's
+installed language runtime," "the host's package manager," or "an
+arbitrary, evolving project checkout," run it natively instead — the
+scheduler's own install footprint is usually tiny compared to the
+toolchain its jobs depend on.
+
 ## License
 
 Three separate files, not trying to agree with each other:
