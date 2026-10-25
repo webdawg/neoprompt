@@ -237,6 +237,48 @@ tasks are skipped. Treat "this flag has existed for a while" as no
 evidence it works; treat "has this flag ever been exercised against a
 real target" as the actual question.
 
+### 9. Maintain a persistent execution-state document -- don't let session boundaries erase awareness
+
+A long-running project needs a living document that answers "where are
+we, right now, in this environment" -- separate from static spec (what
+a host *is*) and static rules (how to behave). If that document doesn't
+exist yet in a project you're working on, create it instead of treating
+its absence as normal.
+
+**Why**: a model's own context ends at the session boundary, but the
+project doesn't. Static docs (a host's spec, an environment's access
+procedures, universal rules like this file) survive session boundaries
+fine, because they don't change on their own -- but *active, in-progress
+state* (what's half-done, what's blocked, what was just discovered,
+what a previous session concluded) has nowhere to live unless something
+is specifically designated to hold it. Without that, every new session
+either re-derives everything from scratch at real cost, or worse,
+*doesn't* re-derive it and acts on stale assumptions. A static spec repo
+and an access-procedures doc are necessary but not sufficient -- neither
+is designed to be read and rewritten every session the way this one is.
+
+Concrete case: a multi-month homelab-automation project had exactly the
+layers this file would recommend -- per-host spec repos, a private
+environment-access doc, and this rules file -- and still lost real,
+costly context repeatedly across sessions (a structural bug sitting
+unexercised in production code for the project's entire history, a
+provisioning flow asserted as "already proven" with zero evidence this
+file didn't catch the discrepancy on this project). Every piece of
+*structure* was correct; the missing piece was a document whose explicit
+job is "what is actually going on right now," checked and updated every
+session, not just the two static layers either side of it.
+
+**How to apply**: on any project meant to span more than one session,
+confirm a current-state document exists (name it whatever fits the
+project -- this file doesn't mandate a format) that tracks: what's
+actively in progress, what's blocked and why, what was just learned,
+and where deeper detail lives. Read it before assuming you know the
+state of anything. Update it when state actually changes, not every
+session regardless. If it's missing on a project old enough that it
+should exist, that absence is itself a finding worth reporting -- don't
+quietly start one and say nothing, and don't skip creating it just
+because no one asked for it by name.
+
 ## License
 
 Three separate files, not trying to agree with each other:
