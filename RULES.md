@@ -202,6 +202,41 @@ arbitrary, evolving project checkout," run it natively instead — the
 scheduler's own install footprint is usually tiny compared to the
 toolchain its jobs depend on.
 
+### 8. A flag that disables part of a system doesn't rewire everything that assumed the old path
+
+When a config flag's job is to switch a whole code path off (a subsystem,
+a lifecycle stage, an entire mode), check every *other* reference that
+assumed the thing the flag turns off was still there -- not just the
+block the flag obviously controls.
+
+**Why**: it's easy to write the flag correctly for the one thing it's
+named after, and still leave every downstream task delegating to, or
+reading state from, the old path's identity -- because those references
+were written before the flag existed, and nothing forces them to be
+revisited. The flag "working" (the block it directly guards is correctly
+skipped) gives false confidence that the whole mode works, when in fact
+nothing past that block was ever redirected.
+
+Concrete case: an Ansible playbook had a `baremetal_only` flag meant to
+let it provision a physical host instead of a VM. It correctly skipped
+every Xen-specific VM-lifecycle task when set. But the entire OS-install
+task sequence -- partitioning, pacstrap, chroot, network config, grub,
+roughly a thousand lines -- delegated to a `stage_entry` variable that
+was set once, from a Xen staging-VM inventory group, and never
+reassigned for the bare-metal case anywhere in the file. A dead comment
+even said "overwrite stage_entry when bare metal is activated" -- it was
+never implemented. The flag had existed, untouched, since the project's
+very first commit, and had never actually been run against a real
+target: the one thing that would have caught this immediately.
+
+**How to apply**: when a flag's purpose is "turn off subsystem X," grep
+for every variable/identity that subsystem X was responsible for setting
+(a staging host, a generated name, a connection target) and confirm each
+one still resolves correctly with the flag on -- not just that X's own
+tasks are skipped. Treat "this flag has existed for a while" as no
+evidence it works; treat "has this flag ever been exercised against a
+real target" as the actual question.
+
 ## License
 
 Three separate files, not trying to agree with each other:
