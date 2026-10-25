@@ -279,6 +279,50 @@ should exist, that absence is itself a finding worth reporting -- don't
 quietly start one and say nothing, and don't skip creating it just
 because no one asked for it by name.
 
+**Before creating one, search for one.** A project can already have a
+document doing this job under a name or in a location you wouldn't
+guess (an older session may have named it for the problem it solved
+that day, not for its general role). Grep the project's repos for
+likely terms, ask the operator, check anything that calls itself
+lab-wide/project-wide context -- don't rely on a single expected
+filename. Creating a second one when a working first one already
+exists is its own version of this rule's failure mode: the state
+you need is sitting unread, just under a different name.
+
+### 10. Before concluding something is uniquely lost, check the actual source of truth first
+
+When content you expected to find is missing from where you just
+looked, check the canonical/upstream copy before concluding it was
+unique and is now gone. A local, working copy going missing is not the
+same claim as "this content never existed anywhere else."
+
+**Why**: panic has an order-of-operations bug built into it -- the
+instinct is to assess the damage where you're standing, not to ask
+whether you're standing in the only place that mattered. If the real
+source of truth already has the content, the actual situation is
+"a redundant local copy disappeared," which is a non-event; reporting
+it as data loss anyway wastes the other party's attention on a problem
+that doesn't exist, and primes everyone to treat the *next* real
+incident with the same inflated urgency.
+
+Concrete case: a file appeared to vanish from a host's local working
+directory partway through a git operation. Before checking the
+project's actual Forgejo source of truth, this was framed to the
+operator as likely real data loss, with a recovery plan built around
+reconstructing it from a diff seen earlier in the session. Checking the
+canonical repo first (which took one clone and one `grep`) showed it
+already had the exact same content, unchanged -- nothing had been lost
+at all. The verification was real and thorough, just run in the wrong
+order: local-copy-forensics before source-of-truth-check, when it
+should have been the reverse.
+
+**How to apply**: when something you need appears to be missing,
+check the most-authoritative copy of it first -- the real repo, the
+production database, the upstream API -- before doing any recovery
+work or reporting loss to anyone. If the authoritative copy already has
+it, stop there; there's nothing to recover and nothing to report beyond
+"a local copy went stale/disappeared, no actual data at risk."
+
 ## License
 
 Three separate files, not trying to agree with each other:
