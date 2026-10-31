@@ -19,23 +19,25 @@ Reads `.claude/skills/*/SKILL.md` and `CLAUDE.md`. Already wired:
 `.claude/skills -> ../skills` symlink in this repo; same pattern applies
 when activating a skill in another project.
 
-### Codex + Pi (pi.dev) — share one adapter, not yet built
-Both read an `AGENTS.md` file: Codex at repo root, Pi at repo root *and*
-a global `~/.pi/agent/AGENTS.md` (Pi also accepts `CLAUDE.md` as a
-fallback, so there's some overlap with the Claude adapter above). A single
-`adapters/agents-md/` generating or symlinking an `AGENTS.md` that
-includes `RULES.md`'s content should cover both — confirmed via Pi's own
-docs: https://pi.dev/.
+### AGENTS.md consumers, including Codex and Pi (pi.dev)
 
-Open question before building this one: whether Codex's `AGENTS.md` and
-Pi's `AGENTS.md` expect the same shape/conventions (e.g. does either one
-read a neighboring `skills/`-equivalent, or is it pure instructions-only
-with no reusable-tool concept at all). Not yet researched.
+A thin root `AGENTS.md` now points to `RULES.md`, this architecture, and
+`SESSION-HANDOFF.md` without copying the canonical content. This applies
+when an agent works in this repository; other projects need their own
+entry point referencing the installed/cloned core and their private state.
+Discovery rules are harness-specific, not interchangeable by assumption.
+
+`guides/PI.md` documents Pi context discovery, intentional session resume,
+parallel-session limitations, privacy, and installed-document references.
+The universal checklist in `SESSION-HANDOFF.md` remains harness-neutral.
 
 ## Not yet done
 
-- No adapter directories created yet, no generation script, no symlink
-  wiring beyond Claude's. This file is the plan, not the implementation.
+- No adapter installation/generation script or new symlink wiring.
+- No claim that editing documentation updates already-running sessions.
+- No new extensions, SDK integration, or skill-discovery integration.
+- Codex-specific discovery behavior still needs its own documentation
+  review before implementing a global adapter for it.
 
 ## Private companion repo
 

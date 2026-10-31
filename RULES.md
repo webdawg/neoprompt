@@ -323,6 +323,34 @@ work or reporting loss to anyone. If the authoritative copy already has
 it, stop there; there's nothing to recover and nothing to report beyond
 "a local copy went stale/disappeared, no actual data at risk."
 
+### 11. Preserve the scope of environment rules
+
+A rule about one shared checkout, controller, service, or project is not
+necessarily a rule about every project an operator owns. Determine which
+resources it governs before applying it. Distinguish technical requirements
+from workflow conventions; connecting to a Git host does not inherently
+require the same execution location as running infrastructure automation.
+When the operator clarifies scope, update the canonical instructions and
+conflicting entry points so the next session does not repeat the mistake.
+Do not treat a clarification as permission for unrelated operations.
+
+### 12. Handoffs and publication must preserve boundaries
+
+Before exiting or changing execution environments, record decisions,
+verified state, actual completed work, pending changes, approval gates,
+recovery limits, and the next safe action in the project's existing
+current-state documentation. See `SESSION-HANDOFF.md` for the checklist.
+A saved conversation does not imply that another session has read it.
+
+Keep universal lessons separate from harness-specific instructions and
+private environment state. When versioning a workspace, inspect repository
+boundaries and the staged file list: a private remote does not authorize
+uploading credentials, raw sessions, unrelated artifacts, or nested repos.
+Explicitly distinguish files saved, commits created, and commits verified
+on the remote. Never claim that one repository's push published another
+repository's dirty changes. Preserve concurrent work rather than resetting,
+cleaning, stashing, or overwriting it without coordination.
+
 ## License
 
 Three separate files, not trying to agree with each other:
