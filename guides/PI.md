@@ -10,6 +10,28 @@ Use a thin project `AGENTS.md` to point to the canonical universal rules and pri
 
 The default agent directory is `~/.pi/agent`, overridable by `PI_CODING_AGENT_DIR`. Configuration and discovery can change with version; inspect the installed `docs/configuration.md` rather than assuming another agent's behavior matches Pi's.
 
+## Provider entitlement is not the model catalog
+
+Pi's model catalog can list models that the authenticated account cannot use. This is especially important when a provider login represents a subscription or ChatGPT account rather than a general API-key account: catalog presence does not prove entitlement, and Pi may still start with an explicitly configured but unusable model.
+
+When the available models are uncertain, probe only a deliberately scoped set with a minimal, non-persistent request:
+
+```sh
+pi --no-session --provider <provider> --model <model-id> \\
+  --thinking off --print 'Reply with exactly OK.'
+```
+
+Record the result categories separately:
+
+- successful response: the model accepted this request;
+- `model_not_found` or account-entitlement error: the account cannot use that model;
+- authentication error: fix provider login before judging model availability;
+- rate-limit, quota, timeout, or server error: inconclusive; do not mark the model unavailable.
+
+Do not blindly probe an entire catalog: even tiny requests can consume quota or trigger rate limits. A successful minimal probe also does not test every capability, context size, image mode, or thinking level.
+
+After finding a model that works, select it with `/model` and press `Ctrl+S` in the picker. This saves `defaultProvider` and `defaultModel` for new sessions without removing other models. Leave `enabledModels` unset when all catalog models should remain selectable; that setting controls startup selection and model cycling and therefore acts as a filter. Resumed sessions may restore the model recorded in that session rather than the new-session default.
+
 ## Resume intentionally
 
 ```sh
