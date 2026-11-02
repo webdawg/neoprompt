@@ -351,6 +351,45 @@ on the remote. Never claim that one repository's push published another
 repository's dirty changes. Preserve concurrent work rather than resetting,
 cleaning, stashing, or overwriting it without coordination.
 
+### 13. Commit and push often — don't let proven-but-uncommitted work sit local
+
+Default to committing and pushing early and frequently, as if many other
+contributors are working on the same codebase concurrently and need to
+see your changes. Don't hold work back in an uncommitted, local-only
+state while you wait for it to feel fully proven.
+
+**Why**: keeping work uncommitted as a risk-isolation mechanism has real,
+easy-to-miss costs. It's invisible to any other session or collaborator.
+It gets none of the benefit of whatever automated testing or review
+exists for pushed/merged code — the thing actually meant to catch
+problems in work that isn't fully proven yet. And it's fragile: a single
+execution host's disk becomes a single point of failure for however much
+iteration the work represents, with no history and no copy anywhere
+else. Operating like "1000 coders a day are working on the same code" —
+small commits, pushed constantly — is what actually scales; a large
+hidden local diff does not.
+
+Concrete case: a multi-day Ansible provisioning mechanism was
+deliberately kept uncommitted on its one execution host for the entire
+iteration process, specifically to guarantee zero risk to other builds
+"until proven." The plan worked exactly as designed and never caused an
+incident — but the file had no commit history, was invisible to every
+other session, and existed in exactly one place the whole time. When
+this was discovered, the operator's explicit correction was to commit
+and push far more aggressively going forward, citing automated testing
+— not local caution — as the real mechanism for catching problems in
+work aimed at future state.
+
+**How to apply**: default to small, frequent commits and pushes, even
+for work still being actively iterated on — "not yet fully proven" is
+not by itself a reason to keep something local-only. Reserve actually
+holding something back from the shared repo for a specific, articulated
+reason (an unrotated secret, a change that would break something live
+right now) rather than as the default posture for anything unfinished.
+Lean on automated testing and verification to catch problems in what's
+pushed, rather than using "don't push it yet" as the primary safety
+mechanism.
+
 ## License
 
 Three separate files, not trying to agree with each other:
