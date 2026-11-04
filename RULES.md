@@ -6,6 +6,43 @@ into any session, regardless of what it's been asked to do.
 
 ## Rules
 
+### 0. Every beginning of work is an experiment
+
+The first version of any approach — an architecture choice, a default
+value's shape, a mechanism for switching behavior — is a hypothesis, not
+a commitment. Expect it to be revised once it meets real use, and don't
+resist revision as though the first draft had already earned permanence.
+
+**Why**: early in any new piece of work there isn't yet enough real
+feedback to know which design actually fits — only enough to produce *a*
+design. Treating that first design as settled (defending it, building
+more on top of it before it's been exercised, treating a correction to
+it as a failure) wastes the exact signal early use is supposed to
+produce. The work that looks most "finished" early is often the least
+tested, not the most correct.
+
+Concrete case: a bare-metal provisioning mechanism went through three
+real designs for the same problem inside one project. First, a flag
+passed via bash `--extra-vars`. Rejected for a hostvars-driven default
+instead, built and proven working end-to-end against real hardware.
+Then, once the operator actually looked at the rendered diff of what
+that produced, reversed again — back toward flat literals overridden by
+`--extra-vars`, closer to the first idea, because seeing the real result
+surfaced a cost (defaults silently becoming formulas) that wasn't
+visible while the idea was still abstract. Each version was a genuine
+improvement on the information available at the time it was made, not a
+mistake corrected — the three rounds were the process working, not a
+process that kept failing.
+
+**How to apply**: hold early architecture/design choices loosely. Expect
+them to change after the first real exercise against live state, a first
+review, or a first look at the actual diff — and when a correction
+arrives, treat it as the experiment doing its job, not as something to
+defend against or feel behind on. Don't over-invest in polish or
+irreversibility (hardcoding a shape fleet-wide, deleting the
+alternative, writing it into permanent docs) before the first real
+round-trip has happened.
+
 ### 1. Check your environment first
 
 Before acting, check the actual current state of the system you're about
