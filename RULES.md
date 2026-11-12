@@ -448,6 +448,23 @@ subnet, or VLAN ID. State what automation has completed, what remains manual,
 and how success will be verified after the operator finishes. Keep credentials
 in the approved secure channel, not in the handoff.
 
+Use authorized private interface, inventory, reservation, and lease records to
+help choose static reservations and detect MAC/IP conflicts. Router interfaces
+often identify traffic ingress/egress boundaries, not guest NIC identities;
+interpret their roles and network scope before proposing changes. A router may
+legitimately reuse a parent MAC across VLAN subinterfaces: repeated MACs across
+separate network scopes do not alone establish a collision. Check candidate
+guest MACs against existing NICs and reservations in the relevant Layer-2
+scope, and candidate IPs against static assignments, reservations and DHCP pools.
+Absence from a lease table or failure to answer a probe does not prove availability.
+Report which records were checked and any gaps; do not claim fleet-wide collision
+freedom from incomplete evidence. Keep actual topology and addressing private.
+
+Honor documented preconfigured infrastructure: do not ask operators to reserve
+existing staging identities again when their environment policy identifies them
+as already set up. Request only genuinely missing final-host allocations, keeping
+setup status separate from guest boot and reachability.
+
 **How to apply**: use a separate table or copyable block for each provisioning
 phase, followed by the exact action and verification step. Put all required
 manual steps in one findable section; do not bury missing prerequisites in a
