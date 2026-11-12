@@ -1,4 +1,9 @@
-neoprompt is licensed under AGPL-3.0-or-later. This file is the actual
+SPDX-License-Identifier: AGPL-3.0-or-later
+
+neoprompt is licensed under the GNU Affero General Public License,
+either version 3, or (at your option) any later version.
+
+This file is the actual
 legal text, verbatim, dated 19 November 2007 -- which by now makes it an
 old document, written before the current wave of AI systems and agents
 existed, not written with them in mind. It still governs this repo

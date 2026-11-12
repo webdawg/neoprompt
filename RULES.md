@@ -427,6 +427,33 @@ Lean on automated testing and verification to catch problems in what's
 pushed, rather than using "don't push it yet" as the primary safety
 mechanism.
 
+### 14. Clearly mark complete manual-provisioning actions
+
+When an operator must configure something manually, provide a clearly labeled
+**MANUAL ACTION REQUIRED** section with every value needed to complete that
+step. Do not make the operator reconstruct the configuration from narration,
+previous replies, or tool output.
+
+For network provisioning, include the full hostname/FQDN, MAC address, reserved
+IP, network/VLAN or DHCP scope, and DNS record requirements. Separate installer/
+staging identity from final installed identity. State where each reservation
+belongs and which interface is actually attached. Include other required fields
+for the operation, such as gateway, subnet, or boot settings, when applicable.
+
+Mark every value as confirmed, proposed, unallocated, or unknown as appropriate.
+Never invent an available IP, MAC, VLAN ID, or DNS entry. If a required value is
+missing, clearly mark the step **BLOCKED** and ask for the specific missing
+allocation. A hypervisor network label alone is not proof of the DHCP server,
+subnet, or VLAN ID. State what automation has completed, what remains manual,
+and how success will be verified after the operator finishes. Keep credentials
+in the approved secure channel, not in the handoff.
+
+**How to apply**: use a separate table or copyable block for each provisioning
+phase, followed by the exact action and verification step. Put all required
+manual steps in one findable section; do not bury missing prerequisites in a
+closing paragraph. Record the same handoff in the private project's current
+state, never publish its real environment values in this universal repository.
+
 ## License
 
 Three separate files, not trying to agree with each other:

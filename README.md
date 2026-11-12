@@ -38,4 +38,17 @@ Make lessons portable rather than tied to the agent that first wrote them. Keep 
 
 ## License
 
-See [LICENSE](LICENSE), [LICENSE-OPINION.md](LICENSE-OPINION.md), and [LICENSE-AGENT_NOTE.md](LICENSE-AGENT_NOTE.md); the existing files contain distinct license statements/notes and should be reviewed rather than silently harmonized.
+SPDX-License-Identifier: AGPL-3.0-or-later
+
+neoprompt is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+
+neoprompt is distributed without any warranty; without even the implied
+warranty of merchantability or fitness for a particular purpose. See
+[LICENSE](LICENSE) for the full terms.
+
+[LICENSE-OPINION.md](LICENSE-OPINION.md) and
+[LICENSE-AGENT_NOTE.md](LICENSE-AGENT_NOTE.md) are separate commentary;
+they do not replace the license grant.

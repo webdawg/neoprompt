@@ -19,6 +19,7 @@ This checklist applies to any coding agent, model, editor, or harness. A saved c
 - **Publication state:** files written, staged/unstaged changes, commit IDs, push result, and independent remote verification where possible. One repository's push does not publish sibling changes.
 - **Concurrency:** known parallel sessions, shared dirty files, active jobs/locks, and conflicts requiring coordination. Unknown session state stays unknown.
 - **Next steps:** the smallest safe next action, its preconditions, approval gate, expected output, and stop conditions.
+- **Manual provisioning:** a clearly labeled **MANUAL ACTION REQUIRED** section with complete configuration values, separate staging/final identities, missing allocations marked **BLOCKED**, and verification steps. Follow Rule 14 in `RULES.md`; keep real environment values in private project state.
 - **Recovery:** backups, rollback limits, where instructions can be accessed if the target environment is unavailable, and what has not been tested.
 - **Access:** how to obtain authorized credentials from the existing approved private source, without duplicating secrets into the handoff.
 
