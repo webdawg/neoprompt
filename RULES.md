@@ -448,6 +448,17 @@ subnet, or VLAN ID. State what automation has completed, what remains manual,
 and how success will be verified after the operator finishes. Keep credentials
 in the approved secure channel, not in the handoff.
 
+When the environment requires manual router reservations for new VMs, supplying
+the final guest MAC is the agent's provisioning responsibility, not a missing
+value to push back to the operator. Generate a valid locally administered unicast
+MAC (or obtain the actual hypervisor-assigned MAC), check it against available
+records, pin it in the authoritative VM configuration/inventory, and provide it
+in the first actionable reservation handoff. Do not repeatedly report it as
+“unallocated” or ask the operator to invent it. Distinguish an assigned/pinned MAC
+from an attached live NIC; preserve the installer NIC until the planned switch.
+If collision checks are incomplete, state their scope and remaining gaps rather
+than withholding a concrete candidate or claiming complete verification.
+
 Use authorized private interface, inventory, reservation, and lease records to
 help choose static reservations and detect MAC/IP conflicts. Router interfaces
 often identify traffic ingress/egress boundaries, not guest NIC identities;
